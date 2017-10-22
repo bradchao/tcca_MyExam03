@@ -1,11 +1,14 @@
 package com.example.administrator.myexam03;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -104,6 +107,21 @@ public class MainActivity extends ListActivity {
         adapter = new SimpleAdapter(
                 this,data, R.layout.item, from, to);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                HashMap<String,String> aData = data.get(i);
+
+                Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+                intent.putExtra("name", aData.get("name"));
+                intent.putExtra("tel", aData.get("tel"));
+                intent.putExtra("addr", aData.get("address"));
+                intent.putExtra("imgfile", aData.get("imgfile"));
+                startActivity(intent);
+            }
+        });
+
     }
 
     private class UIHandler extends Handler {

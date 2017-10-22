@@ -26,22 +26,33 @@ public class MainActivity extends ListActivity {
 
         listView = getListView();
 
-        data = new LinkedList<>();
-        HashMap<String,String> d0 = new HashMap<>();
-        d0.put(from[0], "湖莓宴餐坊");
-        d0.put(from[1], "苗栗縣大湖鄉富興村八寮彎2-7號4樓");
-        data.add(d0);
+        getJSONData();
 
-        HashMap<String,String> d1 = new HashMap<>();
-        d1.put(from[0], "神雕邨複合式茶棧");
-        d1.put(from[1], "苗栗縣三義鄉廣盛村廣聲新城38鄰2巷26號");
-        data.add(d1);
-
-
-        adapter = new SimpleAdapter(
-                this,data, R.layout.item, from, to);
-        listView.setAdapter(adapter);
 
 
     }
+
+    private void getJSONData(){
+        new Thread(){
+            @Override
+            public void run() {
+
+                parseJSON("json");
+            }
+        }.start();
+    }
+
+
+    private void parseJSON(String json){
+
+
+        initListView();
+    }
+
+    private void initListView(){
+        adapter = new SimpleAdapter(
+                this,data, R.layout.item, from, to);
+        listView.setAdapter(adapter);
+    }
+
 }
